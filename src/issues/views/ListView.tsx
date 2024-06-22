@@ -1,9 +1,11 @@
 import { useState } from "react"
-import { IssueList } from "../components/IssueList"
-import { LabelPicker } from "../components/LabelPicker"
+import { LoadingIcon } from "../../share/components/LoadingIcon"
+import { IssueList, LabelPicker } from "../components"
+import { useIssues } from "../hooks"
 
 export const ListView = () => {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([])
+  const { issuesQuery } = useIssues()
 
   const handleChange = (labelName: string) => {
     if (selectedLabels.includes(labelName)) {
@@ -16,7 +18,11 @@ export const ListView = () => {
   return (
     <div className="row mt-5">
       <div className="col-8">
-        <IssueList />
+        {issuesQuery.isLoading ? (
+          <LoadingIcon />
+        ) : (
+          <IssueList issues={issuesQuery.data || []} />
+        )}
       </div>
 
       <div className="col-4">
