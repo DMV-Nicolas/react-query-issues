@@ -13,7 +13,8 @@ export const IssueView = () => {
   }
 
   if (!issueQuery.data) {
-    return navigate("/issues/list")
+    navigate("/issues/list")
+    return <LoadingIcon />
   }
 
   return (
