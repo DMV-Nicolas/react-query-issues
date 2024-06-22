@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 import { githubApi } from "../../api/githubApi"
-import { sleep } from "../helpers"
+import { sleep } from "../../helpers"
 import { Label } from "../interfaces/label"
 
 const getLabels = async () => {
   await sleep(2000)
-  const { data } = await githubApi.get<Label[]>("/labels")
+  const { data } = await githubApi.get<Label[]>("/labels?per_page=100")
   return data
 }
 

@@ -5,7 +5,11 @@ import { useIssues } from "../hooks"
 
 export const ListView = () => {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([])
-  const { issuesQuery } = useIssues()
+  const [selectedState, setSelectedState] = useState<string>()
+  const { issuesQuery } = useIssues({
+    state: selectedState,
+    labels: selectedLabels,
+  })
 
   const handleChange = (labelName: string) => {
     if (selectedLabels.includes(labelName)) {
@@ -21,7 +25,13 @@ export const ListView = () => {
         {issuesQuery.isLoading ? (
           <LoadingIcon />
         ) : (
-          <IssueList issues={issuesQuery.data || []} />
+          <IssueList
+            issues={issuesQuery.data || []}
+            selectedState={selectedState}
+            onSelectedStateChange={(state: string | undefined) =>
+              setSelectedState(state)
+            }
+          />
         )}
       </div>
 
